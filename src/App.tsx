@@ -258,6 +258,7 @@ function HomeBoxCarousel({ boxes }: { boxes: ApiBox[] }) {
   const [page, setPage] = useState(0);
   const [paused, setPaused] = useState(false);
   const [desktop, setDesktop] = useState(() => typeof window === 'undefined' || window.matchMedia('(min-width: 821px)').matches);
+  const touchStart = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const media = window.matchMedia('(min-width: 821px)');
@@ -275,8 +276,20 @@ function HomeBoxCarousel({ boxes }: { boxes: ApiBox[] }) {
   }, [desktop, paused, pageCount]);
 
   const move = (direction: number) => setPage(current => (current + direction + pageCount) % pageCount);
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0];
+    touchStart.current = { x: touch.clientX, y: touch.clientY };
+  };
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (desktop || pageCount <= 1) return;
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - touchStart.current.x;
+    const deltaY = touch.clientY - touchStart.current.y;
+    if (Math.abs(deltaX) < 48 || Math.abs(deltaX) <= Math.abs(deltaY) * 1.2) return;
+    move(deltaX < 0 ? 1 : -1);
+  };
 
-  return <div className="home-box-carousel" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+  return <div className="home-box-carousel" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
     <div className="home-box-carousel-viewport">
       <div className="home-box-carousel-track" style={{ '--carousel-page': page } as React.CSSProperties}>
         {pages.map((pageBoxes, pageIndex) => <div className="home-box-carousel-page" key={`page-${pageIndex}`}>
