@@ -521,6 +521,32 @@ html,body,#root,.site-shell{width:100%;max-width:100%;overflow-x:clip}
   }
 }
 
+/* Landing banner and collection layout */
+.home-banner-stage{width:100vw;margin-left:calc(50% - 50vw);overflow:hidden}
+.home-banner-stage .service-banner.full-width{width:100%;margin:0;border-radius:0;box-shadow:none}
+.home-catalog-layout{width:min(100%,1280px);margin:0 auto;padding:42px 24px 74px;display:grid;grid-template-columns:minmax(300px,3fr) minmax(0,7fr);align-items:start;gap:26px}
+.home-drop-card{min-height:440px}
+.home-box-collection{min-width:0;margin:0;padding:0}
+.home-box-collection .box-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+
+@media(max-width:1040px) and (min-width:821px){
+  .home-catalog-layout{grid-template-columns:minmax(270px,34fr) minmax(0,66fr);gap:20px}
+  .home-box-collection .box-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(max-width:820px){
+  .home-banner-stage{order:-1}
+  .home-banner-stage .service-banner-slide{aspect-ratio:16/11}
+  .home-catalog-layout{width:100%;padding:18px 16px 54px;display:flex;flex-direction:column;gap:32px}
+  .home-drop-card{width:100%;min-height:410px}
+  .home-box-collection{width:100%}
+  .home-box-collection .box-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(max-width:560px){
+  .home-box-collection .box-grid{grid-template-columns:1fr}
+}
+
 @media(max-width:820px){
   .hero{
     padding:24px 22px 30px;
