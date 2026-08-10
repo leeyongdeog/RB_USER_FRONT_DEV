@@ -81,7 +81,7 @@ const previewOutcomes: Record<AnimationPreviewMode, OpenBoxResult> = {
 
 const revealStyleOptions: { value: RevealStyle; label: string; icon: typeof Gift }[] = [
   { value: 'box', label: '선물상자', icon: Gift },
-  { value: 'box3d', label: '3D 선물상자', icon: Sparkles },
+  // { value: 'box3d', label: '3D 선물상자', icon: Sparkles },
   { value: 'slot', label: '슬롯머신', icon: Coins },
   { value: 'capsule', label: '캡슐 머신', icon: Circle },
   // { value: 'portal', label: '마법 포털', icon: Sparkles },
