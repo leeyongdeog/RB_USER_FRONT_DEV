@@ -523,6 +523,5 @@ export default function BoxRevealStage({
       <button onClick={() => setMuted(!muted)} aria-label={muted ? '소리 켜기' : '소리 끄기'}>{muted ? <VolumeX size={17}/> : <Volume2 size={17}/>}</button>
     </div>
     {sequential && !opened && <div className="remaining-box-counter"><span>남은 박스</span><b>{remainingCount}</b></div>}
-    <span className="preview-label">GSAP NATIVE WEB REVEAL</span>
   </div>;
 }

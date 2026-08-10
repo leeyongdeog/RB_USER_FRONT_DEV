@@ -713,7 +713,6 @@ export default function CapsuleMachineRevealStage({
       {muted ? <VolumeX size={17}/> : <Volume2 size={17}/>}
     </button>
     {sequential && !revealed && <div className="remaining-box-counter"><span>남은 박스</span><b>{remainingCount}</b></div>}
-    <span className="preview-label">GSAP CAPSULE MACHINE REVEAL</span>
   </div>
   </>;
 }

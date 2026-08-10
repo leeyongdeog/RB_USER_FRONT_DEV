@@ -15,7 +15,7 @@ import clickSound from '../assets/click.wav';
 import lightSound from '../assets/light.mp4';
 import openSound from '../assets/open.wav';
 import {
-  AUTO_QUALITY_CHANGE_EVENT, REVEAL_QUALITY_PROFILES, loadAutoQuality,
+  AUTO_QUALITY_CHANGE_EVENT, loadAutoQuality,
   type QualityChoice, type ResolvedQuality,
 } from '../services/revealQuality';
 
@@ -89,7 +89,6 @@ export default function GiftBox3DRevealStage({
   });
   const [autoQuality, setAutoQuality] = useState<ResolvedQuality>(loadAutoQuality);
   const quality = qualityChoice === 'auto' ? autoQuality : qualityChoice;
-  const profile = REVEAL_QUALITY_PROFILES[quality];
   const current = LEVELS[level - 1];
   const artwork = LUXURY_ARTWORK;
   const levelUpCount = Math.max(0, Number(outcome?.levelUpCount ?? (targetLevel - startLevel)));
@@ -392,6 +391,5 @@ export default function GiftBox3DRevealStage({
       <button onClick={() => setMuted(!muted)} aria-label={muted ? '소리 켜기' : '소리 끄기'}>{muted ? <VolumeX size={17}/> : <Volume2 size={17}/>}</button>
     </div>
     {sequential && !opened && <div className="remaining-box-counter"><span>남은 박스</span><b>{remainingCount}</b></div>}
-    <span className="preview-label">THREE.JS 3D GIFT REVEAL · {profile.fps} FPS</span>
   </div>;
 }
