@@ -504,10 +504,20 @@ html,body,#root,.site-shell{width:100%;max-width:100%;overflow-x:clip}
 
 @media(min-width:821px){
   .hero-with-banner{
+    width:100vw;
+    margin-left:calc(50% - 50vw);
+    padding-left:0;
+    padding-right:0;
     grid-template-columns:minmax(0,7fr) minmax(0,3fr);
+    gap:0;
   }
   .hero-banner-stage{
     order:-1;
+  }
+  .hero-banner-stage .service-banner.full-width,
+  .hero-copy-with-visual{
+    border-radius:0;
+    box-shadow:none;
   }
 }
 
