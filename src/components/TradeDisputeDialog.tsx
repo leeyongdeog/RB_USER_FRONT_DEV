@@ -1,0 +1,9 @@
+import { useEffect, useState } from 'react';
+import { AlertTriangle, X } from 'lucide-react';
+
+export type TradeDisputeInput={reasonType:string;description:string};
+export default function TradeDisputeDialog({tradeNo,pending,onClose,onSubmit}:{tradeNo:string;pending:boolean;onClose:()=>void;onSubmit:(input:TradeDisputeInput)=>void}){
+  const [reasonType,setReasonType]=useState('PRODUCT_MISMATCH'); const [description,setDescription]=useState('');
+  useEffect(()=>{const handler=(event:KeyboardEvent)=>event.key==='Escape'&&!pending&&onClose();window.addEventListener('keydown',handler);return()=>window.removeEventListener('keydown',handler);},[onClose,pending]);
+  return <div className="trade-dispute-backdrop" onMouseDown={event=>event.target===event.currentTarget&&!pending&&onClose()}><section className="trade-dispute-dialog" role="dialog" aria-modal="true"><header><span><AlertTriangle size={21}/></span><div><h2>트레이드 신고</h2><p>{tradeNo} 거래의 문제를 운영팀에 접수합니다.</p></div><button onClick={onClose} disabled={pending} aria-label="닫기"><X size={18}/></button></header><div><label><span>신고 사유</span><select value={reasonType} onChange={event=>setReasonType(event.target.value)}><option value="PRODUCT_MISMATCH">상품 정보 불일치</option><option value="DAMAGED_PRODUCT">상품 훼손</option><option value="FRAUD_SUSPECTED">사기 의심</option><option value="ABUSIVE_USER">부적절한 사용자 행위</option><option value="OTHER">기타</option></select></label><label><span>상세 내용</span><textarea value={description} onChange={event=>setDescription(event.target.value)} placeholder="문제 상황과 확인이 필요한 내용을 구체적으로 작성해 주세요." maxLength={2000}/><small>{description.length}/2,000</small></label></div><footer><button className="dialog-cancel" onClick={onClose} disabled={pending}>취소</button><button className="dialog-confirm" onClick={()=>description.trim()&&onSubmit({reasonType,description:description.trim()})} disabled={pending||!description.trim()}>{pending?'접수 중':'신고 접수'}</button></footer></section></div>;
+}
