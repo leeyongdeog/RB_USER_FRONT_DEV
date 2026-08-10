@@ -550,6 +550,11 @@ html,body,#root,.site-shell{width:100%;max-width:100%;overflow-x:clip}
 .home-box-carousel-track{display:flex;align-items:stretch;transform:translateX(calc(var(--carousel-page,0) * -100%));transition:transform .55s cubic-bezier(.22,.75,.25,1)}
 .home-box-carousel-page{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;width:100%;min-width:100%}
 .home-box-carousel-page .box-card{width:100%;min-width:0;height:auto}
+.home-box-collection .catalog-category-tabs button{font-size:13px;letter-spacing:-.1px}
+.home-box-collection .catalog-category-tabs button small{font-size:12px}
+.home-box-collection .box-selector select{font-size:12px}
+.home-box-collection .box-card-copy>div>span{font-size:12px}
+.home-box-collection .box-card p{height:44px;font-size:13px;line-height:1.7}
 .home-box-carousel-arrow{position:absolute;z-index:8;top:42%;width:42px;height:42px;display:grid;place-items:center;transform:translateY(-50%);border:1px solid rgba(255,255,255,.82);border-radius:50%;background:rgba(23,32,52,.82);color:#fff;box-shadow:0 8px 24px rgba(23,32,52,.2);backdrop-filter:blur(7px);transition:.2s}
 .home-box-carousel-arrow:hover{transform:translateY(-50%) scale(1.06);background:var(--violet)}
 .home-box-carousel-arrow.prev{left:10px}.home-box-carousel-arrow.next{right:10px}
