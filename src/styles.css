@@ -460,3 +460,21 @@ html,body,#root,.site-shell{width:100%;max-width:100%;overflow-x:clip}
   .site-header .logo strong{display:none}
   .catalog-category-tabs{grid-template-columns:1fr}
 }
+
+/* Service banners */
+.service-banner{position:relative;width:min(calc(100% - 48px),1232px);margin:28px auto 0;overflow:hidden;border-radius:24px;background:#11182d;box-shadow:0 16px 38px rgba(17,24,39,.12)}
+.page-section>.service-banner{width:100%;margin:0 0 28px}
+.service-banner-viewport{overflow:hidden}
+.service-banner-track{display:flex;transition:transform .55s cubic-bezier(.22,.61,.36,1);will-change:transform}
+.service-banner-slide{position:relative;flex:0 0 100%;min-width:0;display:block;aspect-ratio:1232/300;overflow:hidden;color:#fff}
+.service-banner-slide img{display:block;width:100%;height:100%;object-fit:cover}
+.service-banner-placeholder{display:grid;width:100%;height:100%;place-content:center;gap:8px;padding:30px;text-align:center;background:linear-gradient(120deg,#121b35,#654fe4 55%,#ff7064)}
+.service-banner-placeholder strong{font-size:clamp(20px,3vw,38px)}
+.service-banner-placeholder span{font-size:13px;opacity:.78}
+.service-banner-arrow{position:absolute;z-index:2;top:50%;display:grid;width:40px;height:40px;place-items:center;transform:translateY(-50%);border:1px solid rgba(255,255,255,.5);border-radius:50%;color:#fff;background:rgba(10,16,35,.42);backdrop-filter:blur(8px);transition:background .2s,transform .2s}
+.service-banner-arrow:hover{background:rgba(10,16,35,.72);transform:translateY(-50%) scale(1.05)}
+.service-banner-arrow.prev{left:16px}.service-banner-arrow.next{right:16px}
+.service-banner-dots{position:absolute;z-index:2;right:20px;bottom:16px;display:flex;gap:7px;padding:7px 9px;border-radius:999px;background:rgba(10,16,35,.34);backdrop-filter:blur(7px)}
+.service-banner-dot{width:7px;height:7px;padding:0;border:0;border-radius:999px;background:rgba(255,255,255,.5);transition:width .25s,background .25s}
+.service-banner-dot.active{width:22px;background:#fff}
+@media(max-width:600px){.service-banner{width:calc(100% - 24px);margin-top:16px;border-radius:16px}.page-section>.service-banner{width:100%;margin:0 0 20px}.service-banner-slide{aspect-ratio:16/7}.service-banner-arrow{width:34px;height:34px}.service-banner-arrow.prev{left:9px}.service-banner-arrow.next{right:9px}.service-banner-dots{right:12px;bottom:10px}.service-banner-placeholder strong{font-size:20px}}

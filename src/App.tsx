@@ -19,6 +19,7 @@ import {ShoppingPage,ShoppingProductDetailPage} from './ShopPages';
 import { alertDialog, confirmDialog } from './components/AppDialog';
 import { tradeListingDialog } from './components/TradeListingDialog';
 import ShippingRequestDialog from './components/ShippingRequestDialog';
+import BannerCarousel from './components/BannerCarousel';
 import TradeHistoryPage from './TradeHistoryPage';
 import TradeMarketplacePage from './TradeMarketplacePage';
 import { getAccessToken, hasAccessToken, userApi } from './services/api';
@@ -191,7 +192,12 @@ function RevealStage({
 function Shell({ children }: { children: React.ReactNode }) {
   const [menuOpen,setMenuOpen] = useState(false);
   const queryClient = useQueryClient();
-  useLocation();
+  const location = useLocation();
+  const contextualBanner = location.pathname.startsWith('/trade')
+    ? 'EXCHANGE'
+    : location.pathname.startsWith('/community')
+      ? 'COMMUNITY'
+      : null;
   const authenticated = hasAccessToken();
   const { data: summary } = useQuery({ queryKey: ['account-summary'], queryFn: userApi.summary, enabled: authenticated, retry: false });
   useEffect(() => {
@@ -224,6 +230,7 @@ function Shell({ children }: { children: React.ReactNode }) {
       <div className="user-tools"><Link className="tool-button" aria-label="통합 검색" to="/search"><Search size={19}/></Link><Link className="tool-button cart-tool" aria-label="개봉 장바구니" to={authenticated ? '/cart' : '/login?returnTo=%2Fcart'}><ShoppingCart size={19}/></Link><Link className="notification" aria-label="알림" to={authenticated ? '/mypage/notifications' : '/login?returnTo=%2Fmypage%2Fnotifications'}><Bell size={19}/>{Boolean(summary?.unreadNotifications) && <i>{summary!.unreadNotifications > 99 ? '99+' : summary!.unreadNotifications}</i>}</Link>{authenticated ? <Link className="wallet" to="/mypage/points"><Coins size={16}/><span>{formatPrice(summary?.wallet.balance || 0)} P</span></Link> : <Link className="header-login" to="/login" aria-label="로그인" title="로그인"><LogIn size={18}/><span>로그인</span></Link>}<button className="menu-toggle" onClick={() => setMenuOpen(true)} aria-label="메뉴 열기"><Menu size={21}/></button></div>
     </div></header>
     {menuOpen && <><button className="menu-backdrop" onClick={() => setMenuOpen(false)} aria-label="메뉴 닫기"/><aside className="mobile-drawer"><div><span>MENU</span><button onClick={() => setMenuOpen(false)}><X size={20}/></button></div>{nav.map(({to,label,icon:Icon}) => <NavLink key={to} to={to} onClick={() => setMenuOpen(false)}><Icon size={19}/>{label}<ArrowRight size={16}/></NavLink>)}</aside></>}
+    {contextualBanner && <BannerCarousel placement={contextualBanner}/>}
     <main>{children}</main>
     <nav className="mobile-bottom-nav">{nav.map(({to,label,icon:Icon}) => <NavLink key={to} to={to} end={to === '/'}><Icon size={19}/><span>{label}</span></NavLink>)}</nav>
     <footer><div><Link className="logo footer-logo" to="/"><span><Box size={20}/></span><strong>RANDOM DROP</strong></Link><p>열어보는 순간이 가장 재미있는 랜덤박스 플랫폼</p></div><div><b>고객지원</b><span>평일 10:00 — 18:00</span><span>support@randomdrop.kr</span></div><div><b>안내</b><Link to="/community">공지사항</Link><Link to="/community">이용약관 · 개인정보처리방침</Link></div><small>© 2026 Random Drop. All rights reserved.</small></footer>
@@ -254,6 +261,7 @@ function ShopPage() {
   const eventBoxes = filteredBoxes.filter(box => box.eventActive);
 
   return <section className="content-section page-section shop-page">
+    <BannerCarousel placement="EVENT"/>
     <div className="page-title split">
       <div><span className="section-kicker">RANDOM BOX SHOP</span><h1>랜덤박스</h1><p>카테고리별 랜덤박스를 비교하고 원하는 박스를 선택해 보세요.</p></div>
       <label className="box-selector"><span className="sr-only">박스 카테고리</span><select value={category} onChange={event => setCategory(event.target.value)}><option value="ALL">전체 카테고리</option>{categories.map(item => <option key={item.code} value={item.code}>{item.name}</option>)}</select><ChevronDown size={15}/></label>
@@ -274,6 +282,7 @@ function HomePage() {
   const featured = filteredBoxes.find(box => box.status === 'ON_SALE') || filteredBoxes[0] || boxes.find(box => box.status === 'ON_SALE') || boxes[0];
   const onSaleCount = boxes.filter(box => box.status === 'ON_SALE').length;
   return <>
+    <BannerCarousel placement="HOME"/>
     <section className="hero"><div className="hero-copy"><span className="section-kicker"><Sparkles size={14}/> 오늘의 드롭</span><h1>결과보다 먼저,<br/><em>기대감</em>을 열어보세요.</h1><p>원하는 테마의 박스를 고르고, 화면을 터치하는 순간 시작되는 특별한 개봉 경험.</p><div className="hero-actions"><Link to={featured ? `/boxes/${featured.slug}` : '#box-collection'}>지금 열어보기 <ArrowRight size={17}/></Link><Link to="/inventory" className="ghost">내 인벤토리</Link></div><div className="trust-row"><span><ShieldCheck size={16}/> 확률 버전 공개</span><span><PackageCheck size={16}/> 실물 배송</span><span><ArrowLeftRight size={16}/> 안전한 트레이드</span></div></div><div className="hero-stage"><div className="hero-ring one"/><div className="hero-ring two"/>{featured ? <GiftVisual box={featured} large/> : <div className="data-state">판매 중인 박스가 없습니다.</div>}<div className="floating-label top"><b>{featured?.typeName || 'BOX'}</b><span>대표 박스</span></div><div className="floating-label bottom"><b>{onSaleCount}</b><span>현재 판매 중</span></div></div></section>
     <section className="content-section" id="box-collection"><div className="section-heading"><div><span className="section-kicker">BOX COLLECTION</span><h2>어떤 행운을 열어볼까요?</h2><p>K-POP 굿즈, K-뷰티, K-FOOD 카테고리에서 원하는 박스를 선택하세요.</p></div><label className="box-selector"><span className="sr-only">박스 카테고리</span><select value={category} onChange={event => setCategory(event.target.value)}><option value="ALL">전체 카테고리</option>{categories.map(item => <option key={item.code} value={item.code}>{item.name}</option>)}</select><ChevronDown size={15}/></label></div><CatalogCategoryTabs categories={categories} selected={category} onChange={setCategory}/>{isLoading ? <div className="data-state">박스 목록을 불러오고 있습니다.</div> : isError ? <div className="data-state error">박스 목록을 불러오지 못했습니다.</div> : filteredBoxes.length ? <div className="box-grid">{filteredBoxes.map((box,index) => <BoxCard key={box.id} box={box} featured={index === 0}/>)}</div> : <div className="data-state">선택한 카테고리의 판매 박스가 없습니다.</div>}</section>
     <section className="flow-section"><div className="section-heading"><div><span className="section-kicker">HOW IT WORKS</span><h2>열고, 고르고, 다시 연결되는 흐름</h2></div></div><div className="flow-grid">{[[ShoppingBag,'01','박스 구매','가격과 구성·확률을 확인하고 박스를 구매해요.'],[Sparkles,'02','몰입형 개봉','화면을 터치하며 특별한 개봉 결과를 확인해요.'],[WalletCards,'03','상품 선택','보관, 트레이드, 배송, 포인트 전환 중 선택해요.'],[Truck,'04','수령과 순환','원하는 상품은 배송받고 나머지는 다시 순환시켜요.']].map(([Icon,no,title,desc]:any) => <article key={no}><div><Icon size={20}/><span>{no}</span></div><h3>{title}</h3><p>{desc}</p></article>)}</div></section>

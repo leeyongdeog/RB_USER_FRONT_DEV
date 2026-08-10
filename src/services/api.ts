@@ -103,6 +103,16 @@ export type ApiCatalogCategory = {
   onSaleCount: number;
 };
 
+export type ApiBanner = {
+  id: string;
+  title: string;
+  placement: 'HOME' | 'EVENT' | 'EXCHANGE' | 'COMMUNITY';
+  imageUrl: string;
+  mobileImageUrl: string | null;
+  linkUrl: string | null;
+  linkTarget: 'SELF' | 'BLANK';
+};
+
 export type ApiBoxProduct = {
   id: string;
   name: string;
@@ -275,6 +285,18 @@ export const userApi = {
   async catalogCategories() {
     const { data } = await api.get<{ items: ApiCatalogCategory[] }>('/catalog/categories');
     return data.items;
+  },
+  async banners(placement: ApiBanner['placement']) {
+    const { data } = await api.get<{ items: Record<string, unknown>[] }>('/catalog/banners', { params: { placement } });
+    return data.items.map(row => ({
+      id: String(row.id),
+      title: String(row.title || ''),
+      placement: String(row.placement || placement) as ApiBanner['placement'],
+      imageUrl: String(row.image_url || ''),
+      mobileImageUrl: row.mobile_image_url ? String(row.mobile_image_url) : null,
+      linkUrl: row.link_url ? String(row.link_url) : null,
+      linkTarget: String(row.link_target || 'SELF') as ApiBanner['linkTarget'],
+    })).filter(banner => Boolean(banner.imageUrl)) as ApiBanner[];
   },
   async box(identifier: string) {
     const { data } = await api.get<ApiBox & { products: Record<string, unknown>[] }>(`/catalog/boxes/${identifier}`);
