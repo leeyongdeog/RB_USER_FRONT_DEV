@@ -74,12 +74,17 @@ jobs:
           role-session-name: user-front-deploy
           mask-aws-account-id: true
 
+      - name: Verify AWS identity
+        run: aws sts get-caller-identity  
+
       - name: Deploy to Amazon S3
         run: >
           aws s3 sync dist
           s3://${{ vars.S3_BUCKET }}/${{ vars.S3_PREFIX }}/
           --delete
           --only-show-errors
+      
+      
 
       - name: Invalidate CloudFront cache
         run: >
