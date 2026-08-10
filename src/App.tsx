@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import {
   ArrowLeftRight, ArrowRight, Bell, Box, ChevronDown, Circle, CircleHelp, Clock3,
-  Coins, Gift, Home, Inbox, Menu, MessageCircle, PackageCheck,
+  Coins, Gift, Home, Inbox, LogIn, Menu, MessageCircle, PackageCheck,
   Search, ShieldCheck, ShoppingBag, ShoppingCart, Sparkles, Truck, UserRound, WalletCards, X,
 } from 'lucide-react';
 import BoxRevealStage from './components/BoxRevealStage';
@@ -221,7 +221,7 @@ function Shell({ children }: { children: React.ReactNode }) {
     <header className="site-header"><div className="header-inner">
       <Link className="logo" to="/"><span><Box size={22}/><Sparkles size={10}/></span><strong>RANDOM DROP</strong></Link>
       <nav className="desktop-nav">{nav.map((item) => <NavLink key={item.to} to={item.to} end={item.to === '/'}>{item.label}</NavLink>)}</nav>
-      <div className="user-tools"><Link className="tool-button" aria-label="통합 검색" to="/search"><Search size={19}/></Link><Link className="tool-button cart-tool" aria-label="개봉 장바구니" to={authenticated ? '/cart' : '/login?returnTo=%2Fcart'}><ShoppingCart size={19}/></Link><Link className="notification" aria-label="알림" to={authenticated ? '/mypage/notifications' : '/login?returnTo=%2Fmypage%2Fnotifications'}><Bell size={19}/>{Boolean(summary?.unreadNotifications) && <i>{summary!.unreadNotifications > 99 ? '99+' : summary!.unreadNotifications}</i>}</Link>{authenticated ? <Link className="wallet" to="/mypage/points"><Coins size={16}/><span>{formatPrice(summary?.wallet.balance || 0)} P</span></Link> : <Link className="header-login" to="/login">로그인</Link>}<button className="menu-toggle" onClick={() => setMenuOpen(true)} aria-label="메뉴 열기"><Menu size={21}/></button></div>
+      <div className="user-tools"><Link className="tool-button" aria-label="통합 검색" to="/search"><Search size={19}/></Link><Link className="tool-button cart-tool" aria-label="개봉 장바구니" to={authenticated ? '/cart' : '/login?returnTo=%2Fcart'}><ShoppingCart size={19}/></Link><Link className="notification" aria-label="알림" to={authenticated ? '/mypage/notifications' : '/login?returnTo=%2Fmypage%2Fnotifications'}><Bell size={19}/>{Boolean(summary?.unreadNotifications) && <i>{summary!.unreadNotifications > 99 ? '99+' : summary!.unreadNotifications}</i>}</Link>{authenticated ? <Link className="wallet" to="/mypage/points"><Coins size={16}/><span>{formatPrice(summary?.wallet.balance || 0)} P</span></Link> : <Link className="header-login" to="/login" aria-label="로그인" title="로그인"><LogIn size={18}/><span>로그인</span></Link>}<button className="menu-toggle" onClick={() => setMenuOpen(true)} aria-label="메뉴 열기"><Menu size={21}/></button></div>
     </div></header>
     {menuOpen && <><button className="menu-backdrop" onClick={() => setMenuOpen(false)} aria-label="메뉴 닫기"/><aside className="mobile-drawer"><div><span>MENU</span><button onClick={() => setMenuOpen(false)}><X size={20}/></button></div>{nav.map(({to,label,icon:Icon}) => <NavLink key={to} to={to} onClick={() => setMenuOpen(false)}><Icon size={19}/>{label}<ArrowRight size={16}/></NavLink>)}</aside></>}
     <main>{children}</main>
