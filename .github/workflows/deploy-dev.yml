@@ -42,6 +42,29 @@ jobs:
           VITE_USER_WS_URL: ${{ vars.VITE_USER_WS_URL }}
           VITE_UNITY_BUILD_ENABLED: ${{ vars.VITE_UNITY_BUILD_ENABLED }}
 
+      - name: Inspect GitHub OIDC claims
+        shell: bash
+        run: |
+          RESPONSE=$(curl -sS \
+            -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.amazonaws.com")
+
+          TOKEN=$(echo "$RESPONSE" | jq -r '.value')
+          export TOKEN
+
+          node -e '
+            const payload = JSON.parse(
+              Buffer.from(process.env.TOKEN.split(".")[1], "base64url").toString()
+            );
+            console.log(JSON.stringify({
+              iss: payload.iss,
+              aud: payload.aud,
+              sub: payload.sub,
+              repository: payload.repository,
+              ref: payload.ref
+            }, null, 2));
+          '    
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v6
         with:
