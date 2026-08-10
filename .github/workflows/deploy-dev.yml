@@ -74,8 +74,12 @@ jobs:
           role-session-name: user-front-deploy
           mask-aws-account-id: true
 
-      - name: Verify AWS identity
-        run: aws sts get-caller-identity  
+      - name: Verify assumed AWS role
+        shell: bash
+        run: |
+          CALLER_ARN="$(aws sts get-caller-identity --query Arn --output text)"
+          ROLE_NAME="$(echo "$CALLER_ARN" | cut -d/ -f2)"
+          echo "Assumed role name: $ROLE_NAME" 
 
       - name: Deploy to Amazon S3
         run: >
