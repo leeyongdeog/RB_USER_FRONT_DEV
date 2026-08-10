@@ -503,7 +503,7 @@ export default function BoxRevealStage({
         {sequential ? <button className="primary sequential-continue" type="button" onClick={onContinue} disabled={continuePending}>
           {continuePending ? '다음 박스를 준비하고 있습니다' : remainingCount > 0 ? '계속' : '결과 확인'} <ArrowRight size={14}/>
         </button> : <><Link className="primary" to="/inventory"><PackageOpen size={15}/> 인벤토리 보기 <ArrowRight size={14}/></Link>
-          <Link to="/shop"><ShoppingBag size={15}/> 랜투샵 가기</Link></>}
+          <Link to="/shop"><ShoppingBag size={15}/> 랜덤박스 가기</Link></>}
       </div></div>
     {!opened && <div className="reveal-guide"><div className="level-chip"><i/> {doubled ? 'DOUBLE · L0' : `LEVEL ${level} · ${current.name}`}</div>
       {doubled && <b className="double-chip">DOUBLE 확정 · 업그레이드 종료</b>}

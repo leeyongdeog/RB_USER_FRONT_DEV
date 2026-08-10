@@ -88,7 +88,7 @@ export default function AlternativeRevealResult({
           <Link className="primary" to="/inventory">
             <PackageOpen size={15}/> 인벤토리 보기 <ArrowRight size={14}/>
           </Link>
-          <Link to="/shop"><ShoppingBag size={15}/> 랜투샵 가기</Link>
+          <Link to="/shop"><ShoppingBag size={15}/> 랜덤박스 가기</Link>
         </>}
     </div>
   </>;

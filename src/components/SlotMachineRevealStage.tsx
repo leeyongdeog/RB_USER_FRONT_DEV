@@ -319,7 +319,7 @@ export default function SlotMachineRevealStage({
         {sequential ? <button className="primary sequential-continue" type="button" onClick={onContinue} disabled={continuePending}>
           {continuePending ? '다음 박스를 준비하고 있습니다' : remainingCount > 0 ? '계속' : '결과 확인'} <ArrowRight size={14}/>
         </button> : <><Link className="primary" to="/inventory"><PackageOpen size={15}/> 인벤토리 보기 <ArrowRight size={14}/></Link>
-          <Link to="/shop"><ShoppingBag size={15}/> 랜투샵 가기</Link></>}
+          <Link to="/shop"><ShoppingBag size={15}/> 랜덤박스 가기</Link></>}
       </div>
     </div>
     {!started && <div className="slot-guide"><span>NEW SLOT REVEAL</span><strong>화면을 눌러 행운을 돌려보세요!</strong><small>버튼과 화면 어디를 눌러도 시작됩니다.</small></div>}
