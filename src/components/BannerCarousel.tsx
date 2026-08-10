@@ -12,7 +12,7 @@ const BannerLink = ({ banner, children }: { banner: ApiBanner; children: ReactNo
   return <Link className="service-banner-link" to={banner.linkUrl}>{children}</Link>;
 };
 
-export default function BannerCarousel({ placement }: { placement: BannerPlacement }) {
+export default function BannerCarousel({ placement, fullWidth = false }: { placement: BannerPlacement; fullWidth?: boolean }) {
   const { data: banners = [] } = useQuery({ queryKey: ['service-banners', placement], queryFn: () => userApi.banners(placement), staleTime: 60_000 });
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -28,7 +28,7 @@ export default function BannerCarousel({ placement }: { placement: BannerPlaceme
   if (!banners.length) return null;
   const show = (index: number) => setActive((index + banners.length) % banners.length);
 
-  return <section className="service-banner" aria-label="프로모션 배너" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)} onTouchStart={event => { touchStart.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={event => {
+  return <section className={`service-banner${fullWidth ? ' full-width' : ''}`} aria-label="프로모션 배너" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)} onTouchStart={event => { touchStart.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={event => {
     if (touchStart.current === null) return;
     const distance = (event.changedTouches[0]?.clientX ?? touchStart.current) - touchStart.current;
     touchStart.current = null;
