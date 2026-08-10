@@ -9,8 +9,8 @@ import type { GiftBox3DHandle } from '../effects/GiftBox3DLayer';
 import GiftBox3DLayer from '../effects/GiftBox3DLayer';
 import RevealFxLayer, { type RevealFxHandle } from '../effects/RevealFxLayer';
 import { launchRevealConfetti } from '../effects/revealConfetti';
-import luxuryBoxBody from '../assets/bb-l1-luxury.png';
-import luxuryBoxCap from '../assets/bc-l1-luxury.png';
+import cartoonBoxBody from '../assets/bb-l1-cartoon.png';
+import cartoonBoxCap from '../assets/bc-l1-cartoon.png';
 import clickSound from '../assets/click.wav';
 import lightSound from '../assets/light.mp4';
 import openSound from '../assets/open.wav';
@@ -37,7 +37,7 @@ const LEVELS = [
   { name: 'GOLD', color: '#ffd34f', glow: '#fff3a6' },
 ] as const;
 
-const LUXURY_ARTWORK = { body: luxuryBoxBody, cap: luxuryBoxCap } as const;
+const CARTOON_ARTWORK = { body: cartoonBoxBody, cap: cartoonBoxCap } as const;
 type JewelTone = 'ruby' | 'sapphire' | 'gold';
 
 const clampLevel = (value: number | undefined) => Math.min(3, Math.max(1, Number(value || 1)));
@@ -90,7 +90,7 @@ export default function GiftBox3DRevealStage({
   const [autoQuality, setAutoQuality] = useState<ResolvedQuality>(loadAutoQuality);
   const quality = qualityChoice === 'auto' ? autoQuality : qualityChoice;
   const current = LEVELS[level - 1];
-  const artwork = LUXURY_ARTWORK;
+  const artwork = CARTOON_ARTWORK;
   const levelUpCount = Math.max(0, Number(outcome?.levelUpCount ?? (targetLevel - startLevel)));
   const jackpotOutcome = levelUpCount >= 2;
   const totalClicks = outcome?.double ? 3 : (targetLevel - startLevel + 1) * 3;
