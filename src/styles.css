@@ -483,3 +483,63 @@ html,body,#root,.site-shell{width:100%;max-width:100%;overflow-x:clip}
 .service-banner-dot.active{width:22px;background:#fff}
 @media(max-width:820px){.hero-with-banner{grid-template-columns:1fr;gap:18px}.hero-banner-stage{order:initial;min-height:0}.hero-banner-stage .service-banner.full-width,.hero-banner-stage .service-banner-track,.hero-banner-stage .service-banner-slide,.hero-banner-stage .service-banner-link,.hero-banner-stage picture{height:auto}.hero-banner-stage .service-banner.full-width{border-radius:18px}.hero-banner-stage .service-banner-slide{aspect-ratio:16/11}.hero-copy-with-visual{min-height:410px}.hero-copy-backdrop:after{background:rgba(255,255,255,.58)}.hero-copy-backdrop .gift-visual.large{right:50%;top:34%;transform:translate(50%,-50%);opacity:.5}.hero-copy-backdrop .hero-ring{top:34%}}
 @media(max-width:600px){.service-banner{width:calc(100% - 24px);margin-top:16px;border-radius:16px}.service-banner.full-width{width:100%;margin:0;border-radius:0}.hero-banner-stage .service-banner.full-width{border-radius:16px}.page-section>.service-banner{width:100%;margin:0 0 20px}.service-banner-slide{aspect-ratio:16/7}.service-banner-arrow{width:34px;height:34px}.service-banner-arrow.prev{left:9px}.service-banner-arrow.next{right:9px}.service-banner-dots{right:12px;bottom:10px}.service-banner-placeholder strong{font-size:20px}}
+
+/* Keep landing sections visually connected without changing content scale. */
+.hero{
+  min-height:520px;
+  padding:36px 36px 30px;
+}
+.content-section{
+  padding-top:48px;
+  padding-bottom:48px;
+}
+.flow-section{
+  margin-top:24px;
+  padding-top:60px;
+  padding-bottom:60px;
+}
+.site-shell>footer{
+  margin-top:48px;
+}
+
+@media(min-width:821px){
+  .hero-with-banner{
+    grid-template-columns:minmax(0,1.2fr) minmax(360px,.8fr);
+  }
+  .hero-banner-stage{
+    order:-1;
+  }
+}
+
+@media(max-width:820px){
+  .hero{
+    padding:24px 22px 30px;
+  }
+  .content-section{
+    padding-top:40px;
+    padding-bottom:40px;
+  }
+  .flow-section{
+    margin-top:20px;
+    padding-top:48px;
+    padding-bottom:48px;
+  }
+}
+
+@media(max-width:600px){
+  .hero{
+    padding:18px 16px 24px;
+  }
+  .content-section{
+    padding-top:32px;
+    padding-bottom:32px;
+  }
+  .section-heading{
+    margin-bottom:20px;
+  }
+  .flow-section{
+    margin-top:16px;
+    padding-top:38px;
+    padding-bottom:38px;
+  }
+}
